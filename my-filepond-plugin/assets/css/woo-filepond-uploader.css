@@ -1,0 +1,18 @@
+.woo-filepond-uploader {
+	width: 100%;
+	height: 200px;
+	margin: 0;
+	padding: 0;
+}
+
+.woo-filepond--wrapper {
+	width: 100%;
+	height: 100%;
+}
+
+.woo-filepond--drop-label {
+	text-align: center;
+	line-height: 200px;
+	font-size: 20px;
+	color: #bbb;
+}
