@@ -11,6 +11,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'inc/filepond-functions.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'inc/session-handling.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'inc/order-meta.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'dashboard/dashboard.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'inc/tabs.php' );
 add_action( 'wp_ajax_upload_file', 'upload_file_callback' );
 add_action( 'wp_ajax_nopriv_upload_file', 'upload_file_callback' );
 
@@ -28,7 +29,8 @@ function wc_filepond_session_handling_init() {
 		error_log( 'WC Filepond Error: Failed to load session handling file.' );
 	}
 }
-
+// Initialize FilePond Tab Functions
+add_action( 'admin_init', 'wc_filepond_tab_init' );
 function wc_filepond_order_meta_init() {
   // Add action to save uploaded file ID as order meta data
   add_action( 'woocommerce_checkout_update_order_meta', 'wc_filepond_add_order_meta' );
@@ -61,4 +63,5 @@ function wc_filepond_init() {
   wc_filepond_session_handling_init();
   wc_filepond_order_meta_init();
   wc_filepond_dashboard_init();
+  
 }

@@ -29,39 +29,36 @@ function wc_filepond_display_dashboard_page() {
     wp_die( 'You do not have sufficient permissions to access this page.' );
   }
   
-  // Get all orders that contain uploaded files
-  $args = array(
-    'post_type' => 'shop_order',
-    'meta_query' => array(
-      array(
-        'key' => 'wc_filepond_file_id',
-        'compare' => 'EXISTS',
-      ),
-    ),
-  );
-  $orders = get_posts( $args );
+  $filename = plugin_dir_path( __FILE__ ) . 'front-dash.php';
   
-  // Display table of orders with uploaded files
-  echo '<table class="wp-list-table widefat striped">';
-  echo '<thead>';
-  echo '<tr>';
-  echo '<th scope="col">Order ID</th>';
-  echo '<th scope="col">Uploaded File</th>';
-  echo '</tr>';
-  echo '</thead>';
-  echo '<tbody>';
-  foreach ( $orders as $order ) {
-    $order_id = $order->ID;
-    $file_id = get_post_meta( $order_id, 'wc_filepond_file_id', true );
-    $file_url = get_post_meta( $order_id, 'wc_filepond_file_url', true );
-    echo '<tr>';
-    echo '<td>' . $order_id . '</td>';
-    echo '<td><a href="' . $file_url . '">' . $file_url . '</a></td>';
-    echo '</tr>';
-  }
-  echo '</tbody>';
-  echo '</table>';
+	if ( file_exists( $filename ) ) {
+		require $filename;
+	} else {
+		echo "file not found. bzn.gr";
+	}
 }
+function wc_filepond_register_settings() {
+  register_setting( 'wc_filepond_settings_group', 'wc_filepond_allowed_file_types' );
+  register_setting( 'wc_filepond_settings_group', 'wc_filepond_enable_required' );
+  register_setting( 'wc_filepond_settings_group', 'wc_filepond_enable_disabled' );
+  register_setting( 'wc_filepond_settings_group', 'wc_filepond_enable_drop' );
+  /// rest
+  register_setting( 'wc_filepond_settings_group', 'wc_filepond_allow_multiple' );
+  register_setting( 'wc_filepond_settings_group', 'wc_filepond_max_files_handle' );
+  // sizehand
+  register_setting( 'wc_filepond_settings_group', 'wc_filepond_file_size_val' );
+  register_setting( 'wc_filepond_settings_group', 'wc_filepond_file_size_val_min' );
+  register_setting( 'wc_filepond_settings_group', 'wc_filepond_max_upload_size' );
+  register_setting( 'wc_filepond_settings_group', 'wc_filepond_max_total_size' );
+  // preview
+  register_setting( 'wc_filepond_settings_group', 'wc_filepond_enable_preview' );
+  register_setting( 'wc_filepond_settings_group', 'imagePreviewMinHeight' );
+  register_setting( 'wc_filepond_settings_group', 'imagePreviewMaxHeight' );
+  register_setting( 'wc_filepond_settings_group', 'imagePreviewHeight' );
+  // size valid
+  register_setting( 'wc_filepond_settings_group', 'allowFileTypeValidation' );
+}
+add_action( 'admin_init', 'wc_filepond_register_settings' );
 
 // Display custom settings page for file uploads
 function wc_filepond_display_settings_page() {
@@ -70,33 +67,13 @@ function wc_filepond_display_settings_page() {
     wp_die( 'You do not have sufficient permissions to access this page.' );
   }
 
-// Get current max file size and type settings
-$max_file_size = get_option( 'wc_filepond_max_file_size' );
-$allowed_file_types = get_option( 'wc_filepond_allowed_file_types' );
-
-// Display form for updating max file size and type settings (not sure if its working)
-echo '<form method="post" action="">';
-echo '<table class="form-table">';
-echo '<tbody>';
-echo '<tr>';
-echo '<th scope="row">Max File Size (in MB)</th>';
-echo '<td><input type="number" name="wc_filepond_max_file_size" value="' . $max_file_size . '"></td>';
-echo '</tr>';
-echo '<tr>';
-echo '<th scope="row">Allowed File Types</th>';
-echo '<td><input type="text" name="wc_filepond_allowed_file_types" value="' . $allowed_file_types . '"></td>';
-echo '</tr>';
-echo '</tbody>';
-echo '</table>';
-echo '<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes"></p>';
-echo '</form>';
-
-// Handle form submission
-if ( isset( $_POST['submit'] ) ) {
-update_option( 'wc_filepond_max_file_size', sanitize_text_field( $_POST['wc_filepond_max_file_size'] ) );
-update_option( 'wc_filepond_allowed_file_types', sanitize_text_field( $_POST['wc_filepond_allowed_file_types'] ) );
-echo '<div class="notice notice-success is-dismissible"><p>Settings updated successfully.</p></div>';
-}
+  $filename = plugin_dir_path( __FILE__ ) . 'front-settings.php';
+  
+	if ( file_exists( $filename ) ) {
+		require $filename;
+	} else {
+		echo "file not found. bzn.gr";
+	}
 }
 
 ?>

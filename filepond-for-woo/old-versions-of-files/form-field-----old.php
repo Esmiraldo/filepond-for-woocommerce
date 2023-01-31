@@ -9,6 +9,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'filepond-script.php' );
 <script>
   // In this example, the form-field.php file includes a form field for uploading an image using the FilePond library. The form field includes a label and an input field with the class filepond. The accompanying JavaScript initializes the FilePond library, sets options such as allowing only one file to be uploaded, and sets up the server processing logic.
 // The server processing logic uses the XMLHttpRequest (XHR) API to send the uploaded file to the server via a POST request. The response from the server is expected to be a JSON object with a file_id property, which will be loaded into the FilePond instance. If the response from the server is not successful, an error message will be displayed.
+// This is just one example of how the form-field.php file could be implemented, and it may need to be adapted based on your specific requirements and setup.
   FilePond.registerPlugin(
 	  FilePondPluginImagePreview,
 	  FilePondPluginFileEncode,
