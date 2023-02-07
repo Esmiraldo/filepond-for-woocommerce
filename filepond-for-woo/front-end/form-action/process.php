@@ -17,12 +17,12 @@ $file_size = filesize( $file['tmp_name'] );
 $allowed_file_types = array( 'image/jpeg', 'image/png' );
 $max_file_size = 1024 * 1024 * esc_attr( get_option( 'wc_filepond_max_upload_size' ) );
 
-if ( ! in_array( $file['type'], $allowed_file_types ) ) {
-  wp_send_json_error( array( 'message' => 'Invalid file type. Only JPEG and PNG are allowed.' ) );
-}
-if ( $file_size > $max_file_size ) {
-  wp_send_json_error( array( 'message' => 'File is too large. Maximum file size is ' . $max_file_size . ' bytes.' ) );
-}
+//if ( ! in_array( $file['type'], $allowed_file_types ) ) {
+  //wp_send_json_error( array( 'message' => 'Invalid file type. Only JPEG and PNG are allowed.' ) );
+//}
+//if ( $file_size > $max_file_size ) {
+  //wp_send_json_error( array( 'message' => 'File is too large. Maximum file size is ' . $max_file_size . ' bytes.' ) );
+//}
 
 // Generate unique file name
 $file_extension = pathinfo( $file['name'], PATHINFO_EXTENSION );
@@ -33,7 +33,13 @@ $upload_dir = wp_upload_dir();
 $file_path = $upload_dir['path'] . '/' . $new_file_name;
 if ( ! move_uploaded_file( $file['tmp_name'], $file_path ) ) {
   wp_send_json_error( array( 'message' => 'Failed to upload the file.' ) );
+  Echo "Location of directory:" . $uplod_dir;
 }
 
 // Return success
-wp_send_json_success( array( 'file' => $new_file_name ) );
+if (!wp_send_json_success) {
+   echo "Something went wrong with the json";
+} else {
+   wp_send_json_success( array( 'file' => $new_file_name ) );
+}
+
